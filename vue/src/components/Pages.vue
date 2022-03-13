@@ -1,7 +1,7 @@
 <template>
    <div class="row mt-3">
       <CategoryList />
-       <div class="col-9">\
+       <div class="col-9">
            {{ pageContent }}
        </div>
    </div>

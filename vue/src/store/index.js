@@ -8,13 +8,19 @@ const baseUrl = "http://localhost:3000";
 const pagesUrl = `${baseUrl}/pages`;
 const categoriesUrl = `${baseUrl}/categories`;
 const productsUrl = `${baseUrl}/products`;
+const productImagesUrl = `${baseUrl}/media/products/`;
 
 export default new Vuex.Store({
     strict: true,
     state: {
         pages: [],
         categories: [],
-        products: []
+        products: [],
+        productImages: productImagesUrl,
+        currentPage: 1,
+        pageCount: 0,
+        pageSize: 4,
+        currentCategory: "all"
     },
     mutations: {
         setPages(state, pages){
@@ -25,6 +31,15 @@ export default new Vuex.Store({
         },
         setProducts(state, products){
             state.products = products;
+        },
+        setPageCount(state, count){
+            state.pageCount = Math.ceil(Number(count) / state.pageSize);
+        },
+        setCurrentPage(state, page){
+            state.currentPage = page;
+        },
+        setCurrentCategory(state, category){
+            state.currentCategory = category;
         }
     },
     actions: {
@@ -36,12 +51,33 @@ export default new Vuex.Store({
         },
         async setProductsByCategoryAction(context, category){
            let url;
+           let productCountUrl;
 
            if(category != "all"){
             url = `${productsUrl}/${category}`;
+            productCountUrl = `${productsUrl}/count/${category}`;
            }else{
                url = `${productsUrl}`;
+               productCountUrl = `${productsUrl}/count/all`;
            }
+
+           const productCount = (await Axios.get(productCountUrl)).data;
+
+           context.commit("setPageCount",productCount );
+           context.commit("setProducts", (await Axios.get(url)).data);
         },
+
+        async setProductsByCategoryPaginationAction(context, page){
+            let url;
+ 
+            if(context.state.currentCategory != "all"){
+             url = `${productsUrl}/${context.state.currentCategory}?p=${page}`;
+            }else{
+                url = `${productsUrl}?p=${page}`;
+              
+            }
+ 
+            context.commit("setProducts", (await Axios.get(url)).data);
+         },
     },
 });
