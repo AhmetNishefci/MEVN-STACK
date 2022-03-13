@@ -14,11 +14,15 @@ export default {
     Header,
   },
   methods: {
-    ...mapActions(["setPagesAction" , "setCategoriesAction"])
+    ...mapActions(["setPagesAction" , "setCategoriesAction"]),
+    ...mapActions({
+      initializeCart: "cart/initializeCart"
+      })
   },
    created(){
     this.setPagesAction();
     this.setCategoriesAction();
+    this.initializeCart(this.$store);
   },
 };
 </script>
