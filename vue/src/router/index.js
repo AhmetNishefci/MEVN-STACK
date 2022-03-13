@@ -7,25 +7,48 @@ import ShoppingCart from "../components/ShoppingCart";
 import Checkout from "../components/Checkout";
 import Thanks from "../components/Thanks";
 
+import Admin from "../components/admin/Admin";
+import AdminPages from "../components/admin/Pages";
+import PageEditor from "../components/admin/PageEditor";
+
+
 Vue.use(VueRouter);
 
 export default new VueRouter({
     mode: "history",
     routes: [
+        
         { 
-            path: "/thanks", component: Thanks 
+            path: "/cart", 
+            component: ShoppingCart 
         },
         { 
-            path: "/checkout", component: Checkout 
+            path: "/thanks", 
+            component: Thanks 
         },
         { 
-            path: "/cart", component: ShoppingCart 
+            path: "/checkout", 
+            component: Checkout 
         },
         { 
-            path: "/categories/:category", component: ProductList 
+            path: "/categories/:category", 
+            component: ProductList 
         },
         { 
-            path: "/:slug?", component: Pages 
+            path: "/admin",
+             component: Admin,
+             children: [{
+                 path: "pages",
+                 component: AdminPages
+             },
+             {
+                path: "pages/:op(add|edit)/:id?",
+                component: PageEditor
+            }]
+        },
+        { 
+            path: "/:slug?", 
+            component: Pages 
         },
         { 
             path: "*", redirect: "/"
