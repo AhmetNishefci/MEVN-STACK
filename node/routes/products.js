@@ -11,4 +11,14 @@ router.get('/', (req,res) => {
     });
 });
 
+// Get /products/category
+router.get('/:category', (req,res) => {
+    const cat = req.params.category;
+
+    Product.find({ category: cat}, (error,products) => {
+        if(error) console.log(error);
+        res.json(products);
+    });
+});
+
 module.exports = router;

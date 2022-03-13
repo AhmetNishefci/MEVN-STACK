@@ -3,14 +3,14 @@ const mongoose = require("mongoose");
 /** Page Schema */
 const PageSchema = mongoose.Schema({
     name:{
-        type:String
+        type:String,
     },
     slug:{
-        type: String
+        type: String,
     },
     content: {
-        type: String
-    }
+        type: String,
+    },
 })
 
 const Page = (module.exports = mongoose.model("Page", PageSchema));

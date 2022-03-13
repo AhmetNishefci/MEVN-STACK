@@ -3,19 +3,19 @@ const mongoose = require("mongoose");
 /** Order Schema */
 const OrderSchema = mongoose.Schema({
     name:{
-        type:String
+        type:String,
     },
     email:{
-        type:String
+        type:String,
     },
     address:{
-        type:String
+        type:String,
     },
     cart:{
-        type:String
+        type:String,
     },
     total:{
-        type: Number
+        type: Number,
     },
 })
 
