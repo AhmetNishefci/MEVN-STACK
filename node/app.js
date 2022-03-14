@@ -53,11 +53,13 @@ const pages = require('./routes/pages');
 const categories = require('./routes/categories');
 const products = require('./routes/products');
 const orders = require('./routes/orders');
+const auth = require('./routes/auth');
 
 app.use('/pages', pages);
 app.use('/categories', categories);
 app.use('/products', products);
 app.use('/orders', orders);
+app.use('/auth', auth);
 
 /** Start the server */
 const port = 3000;
