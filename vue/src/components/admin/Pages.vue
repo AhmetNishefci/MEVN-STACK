@@ -22,9 +22,7 @@
                        <button class="btn btn-sm btn-secondary mx-2" @click="handleEdit(p)">
                            Edit
                        </button>
-                       <button class="btn btn-sm btn-danger mx-2" @click="deletePage(p)">
-                           Delete
-                       </button>
+                       <button class="btn btn-sm btn-danger mx-2" @click="deletePage(p)">Delete</button>
                    </td>
                </tr>
            </tbody>

@@ -10,12 +10,17 @@ export default {
     },
 
     mutations: {
-        
+        setOrders(state, data){
+            state.orders = data;
+        }
         },
     
     actions: {
         async storeOrderAction(context,order){
             return (await Axios.post(ordersUrl, order)).data.id;
         },
-    }
+        async setOrdersAction(context){
+            context.commit("setOrders", (await Axios.get(ordersUrl)).data);
+        },
+    },
     };
