@@ -3,6 +3,10 @@
        <h2 class="text-center p-2">
            {{ editMode ? "Edit Product" : "Add Product"}}
        </h2>
+
+       <h4 v-if="$v.$invalid && $v.$dirty" class="bg-danger text-white text-center p-2">
+           Values Required for All Fields!
+       </h4>
        <div class="form-group">
            <label for="">Name</label>
            <input type="text" class="form-control" v-model="product.name">
@@ -48,6 +52,7 @@
 
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
+import { required} from "vuelidate/lib/validators";
 
 export default {
     data(){
@@ -67,6 +72,14 @@ export default {
           return this.$route.params["op"] == "edit";
       }
   },
+  validations: {
+      product: {
+          name: {required},
+          description: {required},
+          price: {required},
+          category: {required},
+      }
+  },
   methods: {
       ...mapMutations(["setCurrentPage"]),
       ...mapActions(["addProduct" , "editProduct"]),
@@ -77,13 +90,16 @@ export default {
           this.product.category = e.target.value;
       },
       async handleProduct(){
-          const product = new FormData();
+          this.$v.$touch();
+          if(!this.$v.$invalid){
+              const product = new FormData();
 
           product.append("name", this.product.name);
           product.append("description", this.product.description);
           product.append("price", this.product.price);
           product.append("imageUpload", this.product.image);
           product.append("category", this.product.category.slug || this.product.category);
+          };     
 
           if(this.editMode){
                product.append("id", this.product._id);

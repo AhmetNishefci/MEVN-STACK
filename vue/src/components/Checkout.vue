@@ -3,15 +3,18 @@
         <div class="col-12">
             <div class="form-group m-2">
                 <label for="">Name</label>
-                <input type="text" class="form-control" v-model="order.name">
+                <input type="text" class="form-control" v-model="$v.order.name.$model">
+                <validation-error :validation="$v.order.name"></validation-error>
             </div>
             <div class="form-group m-2">
                 <label for="">E-mail</label>
-                <input type="text" class="form-control" v-model="order.email">
+                <input type="text" class="form-control" v-model="$v.order.email.$model">
+                 <validation-error :validation="$v.order.email"></validation-error>
             </div>
             <div class="form-group m-2">
                 <label for="">Address</label>
-                <input type="text" class="form-control" v-model="order.address">
+                <input type="text" class="form-control" v-model="$v.order.address.$model">
+                 <validation-error :validation="$v.order.address"></validation-error>
             </div>
         </div>
         <div class="col-12 text-center">
@@ -28,7 +31,13 @@
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 
+import ValidationError from "./ValidationError"
+import { required, email} from "vuelidate/lib/validators";
+
 export default {
+    components: {
+        ValidationError
+    },
   data(){
       return{
           order: {
@@ -46,13 +55,22 @@ export default {
           total: "cart/totalPrice"
       })
   },
+  validations: {
+      order: {
+          name: {required},
+          email: {required, email},
+          address: {required},
+      }
+  },
   methods: {
       ...mapActions({
           storeOrder: "orders/storeOrderAction",
           clearCartData: "cart/clearCartData"
       }),
       async submitOrder(){
-          const order = new FormData();
+          this.$v.$touch();
+          if(!this.$v.$invalid){
+              const order = new FormData();
 
           order.append("name", this.order.name);
           order.append("email", this.order.email);
@@ -64,6 +82,7 @@ export default {
           this.clearCartData();
           this.$router.push("/thanks");
        }
+     }
   }
 };
 </script>

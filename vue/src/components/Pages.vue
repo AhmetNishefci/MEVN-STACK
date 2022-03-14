@@ -2,7 +2,7 @@
    <div class="row mt-3">
       <CategoryList />
        <div class="col-9">
-           {{ pageContent }}
+           <div v-html="pageContent"></div>
        </div>
    </div>
 </template> 

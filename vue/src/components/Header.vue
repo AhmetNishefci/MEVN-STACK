@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <router-link class="navbar-brand" to="/">Cms Shopping Cart</router-link> 
+        <router-link class="navbar-brand" to="/">My E-Commerce Shop</router-link> 
          <button 
              class="navbar-toggler" 
              type="button" 
@@ -39,3 +39,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+    .router-link-active{
+        margin-left: 10px;
+    }
+</style>

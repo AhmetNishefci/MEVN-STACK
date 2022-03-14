@@ -24,3 +24,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+    span{
+        margin-right: 20px;
+    }
+    i{
+        margin-right: 20px;
+    }
+</style>
